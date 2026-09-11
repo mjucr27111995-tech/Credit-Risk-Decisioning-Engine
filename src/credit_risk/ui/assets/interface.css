@@ -1,0 +1,684 @@
+/* Credit Risk Scorecard - institutional interface.
+ *
+ * Design intent: the surface of a credit memorandum, not a marketing page.
+ * Restrained neutrals, hairline rules, a single navy accent, and typographic
+ * hierarchy carrying the structure instead of colour blocks.
+ *
+ * Tokens are declared once as custom properties and injected from palette.py,
+ * so Python and CSS can never disagree about a colour.
+ */
+
+/* ---------- Chrome ---------- */
+#MainMenu,
+footer,
+header {
+  visibility: hidden;
+}
+
+html,
+body,
+[class*="css"] {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.stApp {
+  background: var(--crm-canvas);
+}
+
+.block-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  max-width: 1240px;
+}
+
+/* ---------- Masthead ---------- */
+/* Double rule: a brass hairline over the structural border, as on engraved
+ * letterhead. Decorative only — it carries no state. */
+.crm-masthead {
+  border-bottom: 1px solid var(--crm-hairline-strong);
+  box-shadow: 0 1px 0 0 var(--crm-brass-rule);
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.crm-masthead-institution {
+  font-family: var(--crm-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--crm-brass);
+  margin-bottom: 0.4rem;
+}
+
+.crm-masthead h1 {
+  font-family: var(--crm-serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--crm-ink);
+  margin: 0;
+}
+
+.crm-masthead-sub {
+  font-family: var(--crm-sans);
+  font-size: 0.855rem;
+  color: var(--crm-ink-secondary);
+  margin: 0.4rem 0 0 0;
+  line-height: 1.5;
+  max-width: 46rem;
+}
+
+/* Provenance strip: definition pairs, right-aligned against the title. */
+.crm-meta {
+  display: flex;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.15rem;
+}
+
+.crm-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.crm-meta-key {
+  font-family: var(--crm-sans);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--crm-faint);
+}
+
+.crm-meta-val {
+  font-family: var(--crm-mono);
+  font-size: 0.78rem;
+  color: var(--crm-ink-secondary);
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Panels ---------- */
+.crm-panel {
+  background: var(--crm-surface);
+  border: 1px solid var(--crm-hairline);
+  border-radius: 4px;
+  padding: 1.35rem 1.5rem 1.5rem 1.5rem;
+}
+
+/* The application form reads as one document panel, matching the result column. */
+div[data-testid="stForm"] {
+  background: var(--crm-surface);
+  border: 1px solid var(--crm-hairline);
+  border-radius: 4px;
+  padding: 1.3rem 1.45rem 1.45rem 1.45rem;
+}
+
+/* ---------- Section headings ---------- */
+.crm-section {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--crm-hairline);
+}
+
+.crm-section-index {
+  font-family: var(--crm-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--crm-brass);
+  letter-spacing: 0.04em;
+}
+
+.crm-section-title {
+  font-family: var(--crm-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--crm-ink);
+}
+
+.crm-section-hint {
+  font-family: var(--crm-sans);
+  font-size: 0.76rem;
+  color: var(--crm-faint);
+  margin-left: auto;
+}
+
+/* ---------- Verdict ---------- */
+.crm-verdict {
+  background: var(--crm-surface);
+  border: 1px solid var(--crm-hairline);
+  border-radius: 4px;
+  border-top: 3px solid var(--crm-band);
+  padding: 1.4rem 1.5rem 1.5rem 1.5rem;
+}
+
+.crm-verdict-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.55rem;
+}
+
+.crm-verdict-label {
+  font-family: var(--crm-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--crm-muted);
+}
+
+.crm-verdict-rating {
+  font-family: var(--crm-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--crm-band);
+  white-space: nowrap;
+}
+
+/* Tabular figures keep the score from reflowing as digits change. */
+.crm-verdict-score {
+  font-family: var(--crm-serif);
+  font-size: 3.9rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--crm-ink);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.crm-verdict-score span {
+  font-family: var(--crm-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--crm-brass);
+}
+
+.crm-verdict-range {
+  font-family: var(--crm-sans);
+  font-size: 0.79rem;
+  color: var(--crm-muted);
+  margin-top: 0.5rem;
+}
+
+.crm-verdict-action {
+  margin-top: 1.05rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--crm-hairline);
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.crm-verdict-action-key {
+  font-family: var(--crm-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--crm-faint);
+}
+
+.crm-verdict-action-val {
+  font-family: var(--crm-sans);
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: var(--crm-ink);
+}
+
+/* ---------- Metric rail ---------- */
+.crm-rail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--crm-surface);
+  border: 1px solid var(--crm-hairline);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.crm-rail-cell {
+  padding: 0.95rem 1.1rem 1rem 1.1rem;
+  border-right: 1px solid var(--crm-hairline);
+}
+
+.crm-rail-cell:last-child {
+  border-right: none;
+}
+
+.crm-rail-key {
+  font-family: var(--crm-sans);
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--crm-faint);
+  margin-bottom: 0.32rem;
+}
+
+.crm-rail-val {
+  font-family: var(--crm-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--crm-ink);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.crm-rail-val.crm-rail-val-text {
+  font-family: var(--crm-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.crm-rail-note {
+  font-family: var(--crm-sans);
+  font-size: 0.72rem;
+  color: var(--crm-faint);
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+/* ---------- Derived ratio ---------- */
+.crm-ratio {
+  background: var(--crm-brass-soft);
+  border: 1px solid var(--crm-hairline);
+  border-left: 2px solid var(--crm-brass-rule);
+  border-radius: 3px;
+  padding: 0.6rem 0.85rem;
+}
+
+.crm-ratio-label {
+  font-family: var(--crm-sans);
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--crm-brass);
+}
+
+.crm-ratio-value {
+  font-family: var(--crm-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--crm-ink);
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+  /* Defence in depth: format_ratio() keeps this short, but a long value must
+   * never wrap and push the callout out of its column. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.crm-ratio-note {
+  font-family: var(--crm-sans);
+  font-size: 0.7rem;
+  color: var(--crm-muted);
+  line-height: 1.35;
+}
+
+.crm-ratio.crm-ratio-warn {
+  background: #FBF6EE;
+  border-left-color: var(--crm-amber);
+}
+
+.crm-ratio.crm-ratio-warn .crm-ratio-note {
+  color: var(--crm-amber);
+}
+
+/* ---------- Empty state ---------- */
+.crm-empty {
+  background: var(--crm-surface);
+  border: 1px solid var(--crm-hairline);
+  border-radius: 4px;
+  padding: 2.6rem 1.75rem;
+  text-align: center;
+}
+
+.crm-empty-mark {
+  font-family: var(--crm-serif);
+  font-size: 1.6rem;
+  color: var(--crm-brass-rule);
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+.crm-empty strong {
+  display: block;
+  font-family: var(--crm-serif);
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: var(--crm-ink);
+  margin-bottom: 0.35rem;
+}
+
+.crm-empty span {
+  font-family: var(--crm-sans);
+  font-size: 0.83rem;
+  color: var(--crm-muted);
+  line-height: 1.55;
+}
+
+/* ---------- Subheads above charts ---------- */
+.crm-subhead {
+  font-family: var(--crm-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--crm-ink);
+  margin: 1.6rem 0 0.15rem 0;
+}
+
+.crm-subhead-note {
+  font-family: var(--crm-sans);
+  font-size: 0.745rem;
+  color: var(--crm-muted);
+  margin: 0 0 0.55rem 0;
+  line-height: 1.55;
+  max-width: 40rem;
+}
+
+.crm-subhead-note code {
+  font-family: var(--crm-mono);
+  font-size: 0.7rem;
+  background: none;
+  padding: 0;
+  color: var(--crm-ink-secondary);
+}
+
+/* ---------- Narrow viewports ----------
+ * Streamlit's `st.columns` do not stack below a breakpoint, so at tablet width
+ * the four bureau fields would compress until each label wrapped to one
+ * character per line. These rules force the column rows to wrap and give each
+ * field a usable minimum width. */
+@media (max-width: 1100px) {
+  .block-container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  div[data-testid="stHorizontalBlock"] {
+    flex-wrap: wrap;
+  }
+
+  div[data-testid="stColumn"] {
+    flex: 1 1 13rem;
+    min-width: 13rem;
+  }
+
+  .crm-masthead {
+    align-items: flex-start;
+  }
+
+  .crm-meta {
+    gap: 1.1rem 1.5rem;
+  }
+}
+
+@media (max-width: 720px) {
+  div[data-testid="stColumn"] {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .crm-rail {
+    grid-template-columns: 1fr;
+  }
+
+  .crm-rail-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--crm-hairline);
+  }
+
+  .crm-rail-cell:last-child {
+    border-bottom: none;
+  }
+
+  .crm-masthead h1 {
+    font-size: 1.55rem;
+  }
+
+  .crm-verdict-score {
+    font-size: 3.1rem;
+  }
+}
+/* ---------- Footer ---------- */
+.crm-foot {
+  color: var(--crm-faint);
+  font-family: var(--crm-sans);
+  font-size: 0.735rem;
+  line-height: 1.7;
+  border-top: 1px solid var(--crm-hairline);
+  padding-top: 0.9rem;
+  margin-top: 2.4rem;
+}
+
+.crm-foot code {
+  font-family: var(--crm-mono);
+  font-size: 0.71rem;
+  color: var(--crm-muted);
+  background: none;
+  padding: 0;
+}
+
+/* ---------- Streamlit control overrides ---------- */
+div.stButton > button {
+  width: 100%;
+  border-radius: 3px;
+  font-family: var(--crm-sans);
+  font-weight: 600;
+  font-size: 0.83rem;
+  letter-spacing: 0.03em;
+  padding: 0.62rem 1rem;
+  background: var(--crm-accent);
+  color: #FFFFFF;
+  border: 1px solid var(--crm-accent);
+  transition: background 0.12s ease-in-out;
+}
+
+div.stButton > button:hover {
+  background: #14283F;
+  border-color: #14283F;
+  color: #FFFFFF;
+}
+
+div.stButton > button:focus-visible {
+  outline: 2px solid var(--crm-accent);
+  outline-offset: 2px;
+}
+
+/* First section heading inside the form needs no top gap. */
+div[data-testid="stForm"] .crm-section {
+  margin-top: 0;
+}
+
+/* Submit button sits right-aligned and intrinsically sized, not full width.
+ * A brass underline gives the primary action a struck-plate finish. */
+div[data-testid="stForm"] div.stButton > button,
+div[data-testid="stForm"] button[kind="primaryFormSubmit"] {
+  width: auto;
+  min-width: 12rem;
+  border-radius: 3px;
+  font-family: var(--crm-sans);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  padding: 0.6rem 1.4rem;
+  background: var(--crm-accent);
+  color: #FFFFFF;
+  border: 1px solid var(--crm-accent);
+  border-bottom: 2px solid var(--crm-brass-rule);
+}
+
+div[data-testid="stForm"] button[kind="primaryFormSubmit"]:hover {
+  background: #14283F;
+  border-color: #14283F;
+  border-bottom-color: var(--crm-brass);
+  color: #FFFFFF;
+}
+
+/* Inputs: square, hairline-bordered, monospace figures for numerals.
+ * Streamlit 1.62 renders number inputs as `.react-aria-TextField > div` and
+ * gives that wrapper a *white* 1px border, which is invisible against the white
+ * form panel. Targeting the structure (not the volatile emotion class) restores
+ * a visible field boundary. Verified against the live DOM. */
+.stNumberInput .react-aria-TextField > div,
+.stSelectbox div[data-baseweb="select"] > div,
+.stSelectbox .react-aria-Button {
+  border-radius: 3px !important;
+  border-color: var(--crm-hairline-strong) !important;
+  background: var(--crm-surface) !important;
+}
+
+.stNumberInput .react-aria-TextField > div:focus-within,
+.stSelectbox div[data-baseweb="select"] > div:focus-within,
+.stSelectbox .react-aria-Button:focus-visible {
+  border-color: var(--crm-accent) !important;
+  box-shadow: none !important;
+}
+
+.stNumberInput input {
+  font-family: var(--crm-mono) !important;
+  font-size: 0.83rem !important;
+  color: var(--crm-ink) !important;
+  background: transparent !important;
+}
+
+.stSelectbox div[data-baseweb="select"] > div,
+.stSelectbox .react-aria-Button {
+  font-family: var(--crm-sans) !important;
+  font-size: 0.83rem !important;
+  color: var(--crm-ink) !important;
+}
+
+/* Stepper buttons: quiet, separated from the field by a hairline. */
+.stNumberInput button {
+  background: var(--crm-canvas) !important;
+  border-left: 1px solid var(--crm-hairline) !important;
+  color: var(--crm-muted) !important;
+}
+
+.stNumberInput button:hover {
+  background: var(--crm-accent-soft) !important;
+  color: var(--crm-accent) !important;
+}
+
+/* Field labels */
+.stNumberInput label,
+.stSelectbox label,
+.stNumberInput label p,
+.stSelectbox label p {
+  font-family: var(--crm-sans) !important;
+  font-size: 0.755rem !important;
+  font-weight: 600 !important;
+  color: var(--crm-ink-secondary) !important;
+  letter-spacing: 0.01em;
+}
+
+/* Expander: reads as a document appendix. */
+.stExpander {
+  border: 1px solid var(--crm-hairline) !important;
+  border-radius: 4px !important;
+  background: var(--crm-surface);
+}
+
+.stExpander summary {
+  font-family: var(--crm-sans) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  color: var(--crm-ink-secondary) !important;
+}
+
+/* Tables */
+.stDataFrame {
+  border-radius: 3px;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+  background: var(--crm-surface);
+  border-right: 1px solid var(--crm-hairline);
+}
+
+section[data-testid="stSidebar"] .block-container {
+  padding-top: 2.1rem;
+}
+
+.crm-side-head {
+  font-family: var(--crm-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crm-ink);
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--crm-brass-rule);
+  margin-bottom: 0.7rem;
+}
+
+/* Definition list used for the sidebar model card. */
+.crm-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.42rem 0.9rem;
+  font-family: var(--crm-sans);
+  font-size: 0.775rem;
+}
+
+.crm-dl dt {
+  color: var(--crm-muted);
+  margin: 0;
+}
+
+.crm-dl dd {
+  color: var(--crm-ink);
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.crm-dl dd code {
+  font-family: var(--crm-mono);
+  font-size: 0.72rem;
+  background: none;
+  padding: 0;
+  color: var(--crm-ink-secondary);
+}
+
+.crm-side-note {
+  font-family: var(--crm-sans);
+  font-size: 0.735rem;
+  color: var(--crm-muted);
+  line-height: 1.6;
+}
+
+.crm-side-note code {
+  font-family: var(--crm-mono);
+  font-size: 0.7rem;
+  background: none;
+  padding: 0;
+  color: var(--crm-ink-secondary);
+}
