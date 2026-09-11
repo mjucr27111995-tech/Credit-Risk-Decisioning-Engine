@@ -68,7 +68,8 @@ an officer's desk.
 ## Quick start
 
 ```bash
-cd Credit_Risk_Modelling
+git clone https://github.com/mjucr27111995-tech/Credit-Risk-Decisioning-Engine.git
+cd Credit-Risk-Decisioning-Engine
 
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
